@@ -56,7 +56,10 @@ class _FullscreenVideoPlayerState extends State<FullscreenVideoPlayer>
 
   void _lockOrientation(Orientation orientation) {
     if (orientation == Orientation.portrait) {
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     } else {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
