@@ -1,9 +1,3 @@
-import 'package:example/tabs/asset_link.dart';
-import 'package:example/tabs/yt_live.dart';
-import 'package:example/tabs/network_link.dart';
-import 'package:example/tabs/yt.dart';
-import 'package:example/tabs/vimeo.dart';
-import 'package:example/tabs/yt_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:omni_video_player/omni_video_player.dart';
@@ -32,14 +26,19 @@ void main() {
           ),
           body: BlocProvider(
             create: (_) => GlobalPlaybackController(),
-            child: const TabBarView(
+            child: TabBarView(
               children: [
                 YT(),
-                YTLive(),
-                NetworkLink(),
-                AssetLink(),
-                Vimeo(),
-                YTError(),
+                SizedBox(),
+                SizedBox(),
+                SizedBox(),
+                SizedBox(),
+                SizedBox(),
+                // YTLive(),
+                // NetworkLink(),
+                // AssetLink(),
+                // Vimeo(),
+                // YTError(),
               ],
             ),
           ),
@@ -47,4 +46,14 @@ void main() {
       ),
     ),
   );
+}
+
+Widget YT() {
+  return OmniVideoPlayer(
+      options: VideoPlayerConfiguration(
+          videoSourceConfiguration: VideoSourceConfiguration.youtube(
+        videoUrl: Uri.parse('https://youtu.be/LBlIRiwVIuM'),
+        preferredQualities: [OmniVideoQuality.high720, OmniVideoQuality.low144],
+      )),
+      callbacks: VideoPlayerCallbacks());
 }
