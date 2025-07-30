@@ -38,48 +38,31 @@ class FullscreenVideoPlayer extends StatefulWidget {
 
 class _FullscreenVideoPlayerState extends State<FullscreenVideoPlayer>
     with WidgetsBindingObserver {
-  late Orientation currentOrientation;
+  late Orientation _currentOrientation;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-    final orientation = MediaQueryData.fromView(
+    _currentOrientation = MediaQueryData.fromView(
             WidgetsBinding.instance.platformDispatcher.views.first)
         .orientation;
-    currentOrientation = orientation;
-
-    _lockOrientation(currentOrientation);
-  }
-
-  void _lockOrientation(Orientation orientation) {
-    if (orientation == Orientation.portrait) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    }
   }
 
   @override
   void didChangeMetrics() {
-    final orientation = MediaQueryData.fromView(
-            WidgetsBinding.instance.platformDispatcher.views.first)
-        .orientation;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
 
-    if (orientation != currentOrientation) {
-      setState(() {
-        currentOrientation = orientation;
-      });
-      _lockOrientation(currentOrientation);
-    }
+      final orientation = MediaQueryData.fromView(
+              WidgetsBinding.instance.platformDispatcher.views.first)
+          .orientation;
+      if (_currentOrientation != orientation) {
+        _lockOrientation(orientation);
+        _currentOrientation = orientation;
+      }
+    });
   }
 
   @override
@@ -92,6 +75,19 @@ class _FullscreenVideoPlayerState extends State<FullscreenVideoPlayer>
       DeviceOrientation.portraitDown,
     ]);
     super.dispose();
+  }
+
+  void _lockOrientation(Orientation orientation) {
+    if (orientation == Orientation.portrait) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
   }
 
   @override
