@@ -136,7 +136,7 @@ class DefaultPlaybackController extends OmniPlaybackController {
     final wasPlaying = isPlaying;
     final currentPos = currentPosition;
 
-    await pause(useGlobalController: false);
+    // await pause(useGlobalController: false);
 
     final newController = VideoPlaybackController.uri(newUrl, isLive: isLive);
     await newController.initialize();
