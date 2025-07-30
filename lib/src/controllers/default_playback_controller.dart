@@ -17,6 +17,7 @@ class DefaultPlaybackController extends OmniPlaybackController {
 
   final VideoPlayerCallbacks callbacks;
   final GlobalKey globalKeyPlayer;
+  @override
   final String? videoLink;
 
   VideoSourceType type;

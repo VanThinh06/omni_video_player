@@ -60,6 +60,8 @@ abstract class OmniPlaybackController with ChangeNotifier {
   /// A unique video identifier (e.g., YouTube/Vimeo video ID).
   String? get videoId;
 
+  String? get videoLink;
+
   /// The type of video source (e.g., asset, network, YouTube, etc.).
   VideoSourceType get videoSourceType;
 
