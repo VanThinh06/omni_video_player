@@ -17,6 +17,7 @@ class DefaultPlaybackController extends OmniPlaybackController {
 
   final VideoPlayerCallbacks callbacks;
   final GlobalKey globalKeyPlayer;
+  final String? videoLink;
 
   VideoSourceType type;
   Map<OmniVideoQuality, Uri>? qualityUrls;
@@ -65,7 +66,8 @@ class DefaultPlaybackController extends OmniPlaybackController {
       this.type,
       this.qualityUrls,
       this.currentVideoQuality,
-      this.globalKeyPlayer) {
+      this.globalKeyPlayer,
+      this.videoLink) {
     seekTo(initialPosition, skipHasPlaybackStarted: true);
     if (initialVolume != null) {
       volume = initialVolume;
@@ -88,7 +90,8 @@ class DefaultPlaybackController extends OmniPlaybackController {
       required VideoSourceType type,
       Map<OmniVideoQuality, Uri>? qualityUrls,
       OmniVideoQuality? currentVideoQuality,
-      required GlobalKey globalKeyPlayer}) async {
+      required GlobalKey globalKeyPlayer,
+      String? videoLink}) async {
     final videoController =
         (type == VideoSourceType.asset && dataSource != null)
             ? VideoPlaybackController.asset(dataSource)
@@ -114,7 +117,8 @@ class DefaultPlaybackController extends OmniPlaybackController {
         type,
         qualityUrls,
         currentVideoQuality,
-        globalKeyPlayer);
+        globalKeyPlayer,
+        videoLink);
   }
 
   @override

@@ -29,6 +29,7 @@ class YouTubeInitializer implements IVideoPlayerInitializerStrategy {
     final videoId = VideoId(
       options.videoSourceConfiguration.videoUrl!.toString(),
     );
+    final strVideoId = options.videoSourceConfiguration.videoUrl!.toString();
     try {
       final ytVideo = await YouTubeService.getVideoYoutubeDetails(videoId);
       final isLive = ytVideo.isLive;
@@ -60,6 +61,7 @@ class YouTubeInitializer implements IVideoPlayerInitializerStrategy {
         globalKeyPlayer: options.globalKeyPlayer,
         qualityUrls: qualityUrls,
         currentVideoQuality: currentVideoQuality,
+        videoLink: strVideoId
       );
 
       controller.sharedPlayerNotifier.value = Hero(
