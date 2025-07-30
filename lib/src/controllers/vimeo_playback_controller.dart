@@ -353,4 +353,8 @@ class VimeoPlaybackController extends OmniPlaybackController {
     // FIXME: not implemented
     throw UnimplementedError();
   }
+
+  @override
+  // TODO: implement videoLink
+  String? get videoLink => throw UnimplementedError();
 }
