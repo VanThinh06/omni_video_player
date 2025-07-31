@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omni_video_player/src/api/vimeo_video_api.dart';
+import 'package:omni_video_player/src/controllers/default_playback_controller.dart';
 import 'package:omni_video_player/src/controllers/global_volume_synchronizer.dart';
 import 'package:omni_video_player/src/models/vimeo_video_info.dart';
 import 'package:omni_video_player/src/video_player_initializer/video_player_initializer_factory.dart';
@@ -10,6 +11,7 @@ import 'package:omni_video_player/omni_video_player/models/video_player_callback
 import 'package:omni_video_player/omni_video_player/models/video_player_configuration.dart';
 import 'package:omni_video_player/omni_video_player/models/video_source_type.dart';
 import 'package:omni_video_player/omni_video_player/theme/omni_video_player_theme.dart';
+import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:omni_video_player/src/utils/logger.dart';
 
@@ -91,6 +93,19 @@ class VideoPlayerInitializerState extends State<VideoPlayerInitializer>
       _controller = await strategy.initialize();
       if (_controller == null) {
         throw Exception('Failed to initialize video player');
+      }
+
+      if (!mounted) return;
+      if (type == VideoSourceType.youtube) {
+        final defaultController = _controller as DefaultPlaybackController;
+
+        defaultController.sharedPlayerNotifier.value = Hero(
+          tag: widget.options.globalKeyPlayer,
+          child: VideoPlayer(
+            key: widget.options.globalKeyPlayer,
+            defaultController.videoController,
+          ),
+        );
       }
       _startReadyTimeout(_controller!);
     } catch (e, stack) {

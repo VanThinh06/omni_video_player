@@ -49,28 +49,19 @@ class YouTubeInitializer implements IVideoPlayerInitializerStrategy {
       }
 
       final controller = await DefaultPlaybackController.create(
-        videoUrl: videoUrl,
-        audioUrl: audioUrl,
-        dataSource: null,
-        isLive: isLive,
-        globalController: globalController,
-        initialPosition: options.videoSourceConfiguration.initialPosition,
-        initialVolume: options.videoSourceConfiguration.initialVolume,
-        callbacks: callbacks,
-        type: options.videoSourceConfiguration.videoSourceType,
-        globalKeyPlayer: options.globalKeyPlayer,
-        qualityUrls: qualityUrls,
-        currentVideoQuality: currentVideoQuality,
-        videoLink: strVideoId
-      );
-
-      controller.sharedPlayerNotifier.value = Hero(
-        tag: options.globalKeyPlayer,
-        child: VideoPlayer(
-          key: options.globalKeyPlayer,
-          controller.videoController,
-        ),
-      );
+          videoUrl: videoUrl,
+          audioUrl: audioUrl,
+          dataSource: null,
+          isLive: isLive,
+          globalController: globalController,
+          initialPosition: options.videoSourceConfiguration.initialPosition,
+          initialVolume: options.videoSourceConfiguration.initialVolume,
+          callbacks: callbacks,
+          type: options.videoSourceConfiguration.videoSourceType,
+          globalKeyPlayer: options.globalKeyPlayer,
+          qualityUrls: qualityUrls,
+          currentVideoQuality: currentVideoQuality,
+          videoLink: strVideoId);
 
       callbacks.onControllerCreated?.call(controller);
       return controller;

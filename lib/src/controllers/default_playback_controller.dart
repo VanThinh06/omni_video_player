@@ -137,30 +137,31 @@ class DefaultPlaybackController extends OmniPlaybackController {
     if (newUrl == null) return;
 
     final wasPlaying = isPlaying;
-    final currentPos = currentPosition;
-
-    // await pause(useGlobalController: false);
+    final currentPos = currentPosition + const Duration(milliseconds: 2700);
 
     final newController = VideoPlaybackController.uri(newUrl, isLive: isLive);
     await newController.initialize();
+    await newController.seekTo(currentPos);
 
-    videoController.removeListener(_onControllerUpdate);
+    await Future.delayed(Duration(seconds: 2));
 
     newController.addListener(_onControllerUpdate);
 
+    videoController.removeListener(_onControllerUpdate);
+    await videoController.dispose();
+
+    videoController = newController;
     currentVideoQuality = newQuality;
 
-    sharedPlayerNotifier.value = Hero(
-      tag: globalKeyPlayer,
-      child: VideoPlayer(
-        key: globalKeyPlayer,
-        newController,
-      ),
-    );
-
-    await videoController.dispose();
-    videoController = newController;
-    await seekTo(currentPos);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      sharedPlayerNotifier.value = Hero(
+        tag: globalKeyPlayer,
+        child: VideoPlayer(
+          key: globalKeyPlayer,
+          newController,
+        ),
+      );
+    });
 
     if (wasPlaying) {
       await play(useGlobalController: false);
