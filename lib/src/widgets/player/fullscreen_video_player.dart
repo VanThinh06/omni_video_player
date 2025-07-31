@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:omni_video_player/src/navigation/route_aware_listener.dart';
+import 'package:omni_video_player/src/utils/orientation_locker.dart';
 import 'package:omni_video_player/src/widgets/adaptive_video_player_display.dart';
 import 'package:omni_video_player/src/widgets/video_overlay_controls.dart';
 import 'package:omni_video_player/omni_video_player/controllers/omni_playback_controller.dart';
@@ -36,89 +37,50 @@ class FullscreenVideoPlayer extends StatefulWidget {
   State<FullscreenVideoPlayer> createState() => _FullscreenVideoPlayerState();
 }
 
-class _FullscreenVideoPlayerState extends State<FullscreenVideoPlayer>
-    with WidgetsBindingObserver {
-  late Orientation _currentOrientation;
+class _FullscreenVideoPlayerState extends State<FullscreenVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    // Enter immersive full-screen mode hiding system UI overlays.
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    _currentOrientation = MediaQueryData.fromView(
-            WidgetsBinding.instance.platformDispatcher.views.first)
-        .orientation;
-  }
-
-  @override
-  void didChangeMetrics() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-
-      final orientation = MediaQueryData.fromView(
-              WidgetsBinding.instance.platformDispatcher.views.first)
-          .orientation;
-      if (_currentOrientation != orientation) {
-        _lockOrientation(orientation);
-        _currentOrientation = orientation;
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
-
-  void _lockOrientation(Orientation orientation) {
-    if (orientation == Orientation.portrait) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return RouteAwareListener(
       onPop: () {
+        // Restore system UI overlays before closing animation to avoid glitches.
         SystemChrome.setEnabledSystemUIMode(
           SystemUiMode.manual,
           overlays: SystemUiOverlay.values,
         );
       },
-      child: Material(
-        color: Colors.black,
-        child: Column(
-          children: [
-            Expanded(
-              child: VideoOverlayControls(
-                playerBarPadding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 16,
-                ),
-                controller: widget.controller,
-                options: widget.options,
-                callbacks: widget.callbacks,
-                child: AdaptiveVideoPlayerDisplay(
+      child: OrientationLocker(
+        orientation:
+            widget.controller.size.height / widget.controller.size.width > 1
+                ? Orientation.portrait
+                : Orientation.landscape,
+        child: Material(
+          color: Colors.black,
+          child: Column(
+            children: [
+              Expanded(
+                child: VideoOverlayControls(
+                  playerBarPadding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 16,
+                  ),
                   controller: widget.controller,
-                  isFullScreenDisplay: true,
+                  options: widget.options,
+                  callbacks: widget.callbacks,
+                  child: AdaptiveVideoPlayerDisplay(
+                    controller: widget.controller,
+                    isFullScreenDisplay: true,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
