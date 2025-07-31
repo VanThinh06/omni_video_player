@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:omni_video_player/omni_video_player.dart';
+import 'package:omni_video_player/omni_video_player/models/omni_video_speed.dart';
 import 'package:video_player/video_player.dart';
 import 'audio_playback_controller.dart';
 import 'video_playback_controller.dart';
@@ -17,11 +18,13 @@ class DefaultPlaybackController extends OmniPlaybackController {
 
   final VideoPlayerCallbacks callbacks;
   final GlobalKey globalKeyPlayer;
+
   @override
   final String? videoLink;
 
   VideoSourceType type;
   Map<OmniVideoQuality, Uri>? qualityUrls;
+
   @override
   OmniVideoQuality? currentVideoQuality;
 
@@ -436,4 +439,18 @@ class DefaultPlaybackController extends OmniPlaybackController {
 
   @override
   Map<OmniVideoQuality, Uri>? get videoQualityUrls => qualityUrls;
+
+  @override
+  Future switchSpeed(OmniVideoSpeed speed) async {
+    if (videoController.value.playbackSpeed == speed.value) {
+      return;
+    }
+
+    try {
+      await videoController.setPlaybackSpeed(speed.value);
+      notifyListeners();
+    } catch (e) {
+      debugPrint("Failed to set speed: $e");
+    }
+  }
 }

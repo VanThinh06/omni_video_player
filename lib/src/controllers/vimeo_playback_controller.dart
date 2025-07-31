@@ -5,6 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:omni_video_player/omni_video_player/controllers/global_playback_controller.dart';
 import 'package:omni_video_player/omni_video_player/controllers/omni_playback_controller.dart';
 import 'package:omni_video_player/omni_video_player/models/omni_video_quality.dart';
+import 'package:omni_video_player/omni_video_player/models/omni_video_speed.dart';
 import 'package:omni_video_player/omni_video_player/models/video_player_callbacks.dart';
 import 'package:omni_video_player/omni_video_player/models/video_source_type.dart';
 import 'package:video_player/video_player.dart';
@@ -357,4 +358,10 @@ class VimeoPlaybackController extends OmniPlaybackController {
   @override
   // TODO: implement videoLink
   String? get videoLink => throw UnimplementedError();
+
+  @override
+  Future switchSpeed(OmniVideoSpeed speed) {
+    // TODO: implement switchSpeed
+    throw UnimplementedError();
+  }
 }

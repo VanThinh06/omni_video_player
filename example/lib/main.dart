@@ -50,10 +50,16 @@ void main() {
 
 Widget YT() {
   return OmniVideoPlayer(
-      options: VideoPlayerConfiguration(
-          videoSourceConfiguration: VideoSourceConfiguration.youtube(
+    options: VideoPlayerConfiguration(
+      videoSourceConfiguration: VideoSourceConfiguration.youtube(
         videoUrl: Uri.parse('https://youtu.be/LBlIRiwVIuM'),
         preferredQualities: [OmniVideoQuality.high720, OmniVideoQuality.low144],
-      )),
-      callbacks: VideoPlayerCallbacks());
+      ),
+    ),
+    callbacks: VideoPlayerCallbacks(
+      onControllerCreated: (controller) {
+        controller.play();
+      },
+    ),
+  );
 }

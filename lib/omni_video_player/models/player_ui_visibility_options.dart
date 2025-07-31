@@ -43,6 +43,8 @@ class PlayerUIVisibilityOptions {
   /// Whether to show the quality switch button.
   final bool showSwitchVideoQuality;
 
+  final bool showSwitchVideoSpeed;
+
   /// Whether to show the mute/unmute toggle button.
   final bool showMuteUnMuteButton;
 
@@ -70,27 +72,27 @@ class PlayerUIVisibilityOptions {
   /// All options default to `true` except:
   /// - [useSafeAreaForBottomControls] defaults to `false`.
   /// - [showRefreshButtonInErrorPlaceholder] defaults to `true`.
-  const PlayerUIVisibilityOptions({
-    this.showSeekBar = true,
-    this.showCurrentTime = true,
-    this.showDurationTime = true,
-    this.showRemainingTime = true,
-    this.showLiveIndicator = true,
-    this.showLoadingWidget = true,
-    this.showErrorPlaceholder = true,
-    this.showReplayButton = true,
-    this.showThumbnailAtStart = true,
-    this.showVideoBottomControlsBar = true,
-    this.showFullScreenButton = true,
-    this.showMuteUnMuteButton = true,
-    this.useSafeAreaForBottomControls = false,
-    this.showGradientBottomControl = true,
-    this.showRefreshButtonInErrorPlaceholder = true,
-    this.enableForwardGesture = true,
-    this.enableBackwardGesture = true,
-    this.enableExitFullscreenOnVerticalSwipe = true,
-    this.showSwitchVideoQuality = true,
-  });
+  const PlayerUIVisibilityOptions(
+      {this.showSeekBar = true,
+      this.showCurrentTime = true,
+      this.showDurationTime = true,
+      this.showRemainingTime = true,
+      this.showLiveIndicator = true,
+      this.showLoadingWidget = true,
+      this.showErrorPlaceholder = true,
+      this.showReplayButton = true,
+      this.showThumbnailAtStart = true,
+      this.showVideoBottomControlsBar = true,
+      this.showFullScreenButton = true,
+      this.showMuteUnMuteButton = true,
+      this.useSafeAreaForBottomControls = false,
+      this.showGradientBottomControl = true,
+      this.showRefreshButtonInErrorPlaceholder = true,
+      this.enableForwardGesture = true,
+      this.enableBackwardGesture = true,
+      this.enableExitFullscreenOnVerticalSwipe = true,
+      this.showSwitchVideoQuality = true,
+      this.showSwitchVideoSpeed = true});
 
   /// Returns a copy of this [PlayerUIVisibilityOptions] with
   /// the given fields replaced by the new values.
@@ -114,36 +116,38 @@ class PlayerUIVisibilityOptions {
     bool? enableBackwardGesture,
     bool? enableExitFullscreenOnVerticalSwipe,
     bool? showSwitchVideoQuality,
+    bool? showSwitchVideoSpeed,
   }) {
     return PlayerUIVisibilityOptions(
-      showSeekBar: showSeekBar ?? this.showSeekBar,
-      showCurrentTime: showCurrentTime ?? this.showCurrentTime,
-      showDurationTime: showDurationTime ?? this.showDurationTime,
-      showRemainingTime: showRemainingTime ?? this.showRemainingTime,
-      showLiveIndicator: showLiveIndicator ?? this.showLiveIndicator,
-      showLoadingWidget: showLoadingWidget ?? this.showLoadingWidget,
-      showErrorPlaceholder: showErrorPlaceholder ?? this.showErrorPlaceholder,
-      showReplayButton: showReplayButton ?? this.showReplayButton,
-      showThumbnailAtStart: showThumbnailAtStart ?? this.showThumbnailAtStart,
-      showVideoBottomControlsBar:
-          showVideoBottomControlsBar ?? this.showVideoBottomControlsBar,
-      showFullScreenButton: showFullScreenButton ?? this.showFullScreenButton,
-      showMuteUnMuteButton: showMuteUnMuteButton ?? this.showMuteUnMuteButton,
-      useSafeAreaForBottomControls:
-          useSafeAreaForBottomControls ?? this.useSafeAreaForBottomControls,
-      showGradientBottomControl:
-          showGradientBottomControl ?? this.showGradientBottomControl,
-      showRefreshButtonInErrorPlaceholder:
-          showRefreshButtonInErrorPlaceholder ??
-              this.showRefreshButtonInErrorPlaceholder,
-      enableForwardGesture: enableForwardGesture ?? this.enableForwardGesture,
-      enableBackwardGesture:
-          enableBackwardGesture ?? this.enableBackwardGesture,
-      enableExitFullscreenOnVerticalSwipe:
-          enableExitFullscreenOnVerticalSwipe ??
-              this.enableExitFullscreenOnVerticalSwipe,
-      showSwitchVideoQuality:
-          showSwitchVideoQuality ?? this.showSwitchVideoQuality,
-    );
+        showSeekBar: showSeekBar ?? this.showSeekBar,
+        showCurrentTime: showCurrentTime ?? this.showCurrentTime,
+        showDurationTime: showDurationTime ?? this.showDurationTime,
+        showRemainingTime: showRemainingTime ?? this.showRemainingTime,
+        showLiveIndicator: showLiveIndicator ?? this.showLiveIndicator,
+        showLoadingWidget: showLoadingWidget ?? this.showLoadingWidget,
+        showErrorPlaceholder: showErrorPlaceholder ?? this.showErrorPlaceholder,
+        showReplayButton: showReplayButton ?? this.showReplayButton,
+        showThumbnailAtStart: showThumbnailAtStart ?? this.showThumbnailAtStart,
+        showVideoBottomControlsBar:
+            showVideoBottomControlsBar ?? this.showVideoBottomControlsBar,
+        showFullScreenButton: showFullScreenButton ?? this.showFullScreenButton,
+        showMuteUnMuteButton: showMuteUnMuteButton ?? this.showMuteUnMuteButton,
+        useSafeAreaForBottomControls:
+            useSafeAreaForBottomControls ?? this.useSafeAreaForBottomControls,
+        showGradientBottomControl:
+            showGradientBottomControl ?? this.showGradientBottomControl,
+        showRefreshButtonInErrorPlaceholder:
+            showRefreshButtonInErrorPlaceholder ??
+                this.showRefreshButtonInErrorPlaceholder,
+        enableForwardGesture: enableForwardGesture ?? this.enableForwardGesture,
+        enableBackwardGesture:
+            enableBackwardGesture ?? this.enableBackwardGesture,
+        enableExitFullscreenOnVerticalSwipe:
+            enableExitFullscreenOnVerticalSwipe ??
+                this.enableExitFullscreenOnVerticalSwipe,
+        showSwitchVideoQuality:
+            showSwitchVideoQuality ?? this.showSwitchVideoQuality,
+        showSwitchVideoSpeed:
+            showSwitchVideoSpeed ?? this.showSwitchVideoSpeed);
   }
 }

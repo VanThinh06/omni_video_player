@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:omni_video_player/omni_video_player.dart';
+import 'package:omni_video_player/omni_video_player/models/omni_video_speed.dart';
+import 'package:omni_video_player/src/widgets/bottom_control_bar/playback_speed_menu_button.dart';
 import 'package:omni_video_player/src/widgets/bottom_control_bar/video_seek_bar.dart';
 import 'package:omni_video_player/src/widgets/controls/audio_toggle_button.dart';
 import 'package:omni_video_player/src/widgets/controls/fullscreen_toggle_button.dart';
@@ -66,6 +68,13 @@ class VideoPlaybackControlBar extends StatelessWidget {
           ),
         ),
         ...options.customPlayerWidgets.trailingBottomButtons,
+        if (options.playerUIVisibilityOptions.showSwitchVideoSpeed)
+          PlaybackSpeedMenuButton(
+            currentSpeed: OmniVideoSpeed.speed1x,
+            onSpeedSelected: (speed) {
+              controller.switchSpeed(speed);
+            },
+          ),
         if (options.playerUIVisibilityOptions.showSwitchVideoQuality &&
             controller.currentVideoQuality != null &&
             controller.videoQualityUrls != null)

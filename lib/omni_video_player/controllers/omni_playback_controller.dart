@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omni_video_player/omni_video_player.dart';
+import 'package:omni_video_player/omni_video_player/models/omni_video_speed.dart';
 import 'package:video_player/video_player.dart';
 
 /// An abstract interface for controlling video playback across multiple source types.
@@ -141,8 +142,12 @@ abstract class OmniPlaybackController with ChangeNotifier {
   /// The currently selected video quality.
   OmniVideoQuality? get currentVideoQuality;
 
+  // OmniVideoSpeed? get currentVideoSpeed;
+
   /// Switches the video playback quality to the specified [quality].
   ///
   /// Throws an exception if the specified quality is not available.
   Future<void> switchQuality(OmniVideoQuality quality);
+
+  Future switchSpeed(OmniVideoSpeed speed);
 }
