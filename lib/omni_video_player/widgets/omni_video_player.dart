@@ -79,13 +79,27 @@ class _OmniVideoPlayerState extends State<OmniVideoPlayer> {
   @override
   void didUpdateWidget(covariant OmniVideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.options.videoSourceConfiguration.videoSourceType !=
-        oldWidget.options.videoSourceConfiguration.videoSourceType) {
+    final oldUrl =
+        oldWidget.options.videoSourceConfiguration.videoUrl.toString();
+    final newUrl = widget.options.videoSourceConfiguration.videoUrl.toString();
+
+    final oldType = oldWidget.options.videoSourceConfiguration.videoSourceType;
+    final newType = widget.options.videoSourceConfiguration.videoSourceType;
+
+    final shouldReset = oldUrl != newUrl || oldType != newType;
+
+    if (shouldReset) {
       setState(() {
         _options = widget.options;
         _callbacks = widget.callbacks;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

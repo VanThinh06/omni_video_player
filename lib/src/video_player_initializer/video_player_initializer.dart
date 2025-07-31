@@ -52,6 +52,12 @@ class VideoPlayerInitializerState extends State<VideoPlayerInitializer>
     _initialize();
   }
 
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   Future<void> refresh() async {
     setState(() {
       _controller = null;
